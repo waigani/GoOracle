@@ -30,12 +30,13 @@ class GoOracleCommand(sublime_plugin.TextCommand):
             if i >= 0 :
                 region = self.view.sel()[0]
                 text = self.view.substr(sublime.Region(0, region.end()))
-                char_byte_map = self.get_map(text)
-                byte_begin = char_byte_map[region.begin()]
+                cb_map = self.get_map(text)
+                byte_end = cb_map[sorted(cb_map.keys())[-1]]
+                byte_begin = None
                 if not region.empty(): 
-                    byte_end = char_byte_map[region.end()-1]
+                    byte_begin = cb_map[region.begin()-1]
 
-                out, err = self.oracle(byte_begin, byte_end, modes[i])
+                out, err = self.oracle(byte_end, begin_offset=byte_begin, mode=modes[i])
                 self.write_out(out, err, modes[i])
         self.view.window().show_quick_panel(descriptions, on_done)
 
@@ -64,25 +65,25 @@ class GoOracleCommand(sublime_plugin.TextCommand):
             'mode': mode})
         window.focus_view(view)
 
-    def get_map(self, unicode_string):
-        """ Generate a map of character offset to byte offset for the given unicode_string.
+    def get_map(self, chars):
+        """ Generate a map of character offset to byte offset for the given string 'chars'.
         """
 
         byte_offset = 0
-        char_byte_map = {}
+        cb_map = {}
 
-        for char_offset, char in enumerate(unicode_string):
-            char_byte_map[char_offset] = byte_offset
+        for char_offset, char in enumerate(chars):
+            cb_map[char_offset] = byte_offset
             byte_offset += len(char.encode('utf-8'))
-        return char_byte_map
+        return cb_map
 
-    def oracle(self, begin_offset, end_offset, mode):
+    def oracle(self, end_offset, begin_offset=None, mode="plain"):
         """ Builds the oracle shell command and calls it, returning it's output as a string.
         """
 
-        pos = "#" + str(begin_offset)
-        if begin_offset != end_offset:
-            pos += ",#" + str(end_offset)
+        pos = "#" + str(end_offset)
+        if begin_offset is not None:
+            pos = "#%i,#%i" %(begin_offset, end_offset)
         env = get_setting("env")
 
         # Build oracle cmd.

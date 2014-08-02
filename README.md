@@ -7,7 +7,7 @@ GoOracle is a Golang plugin for [SublimeText](http://www.sublimetext.com/) that 
 Usage
 -----
 
-Select a symbol (function, variable, constant etc) and press `ctrl+shift+o`. You will be presented with the following modes of analysis to choose from:
+Select, or place your cursor over, a symbol (function, variable, constant etc) and press `ctrl+shift+o`. You will be presented with the following modes of analysis to choose from:
 
 ```
 callees     show possible targets of selected function call
