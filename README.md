@@ -21,7 +21,7 @@ peers       show send/receive corresponding to selected channel op
 referrers   show all refs to entity denoted by selected identifier
 ```
 
-Press `return`/`enter` and the output will be displayed in a new tab.
+Select one and the output will be displayed in a new tab.
 
 
 Install
