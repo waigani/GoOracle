@@ -46,7 +46,7 @@ Oracle requires several variables to be set in order to work. These are explaine
 }
 ```
 
-You set your own varibles in `Preferences > Package Settings > GoOracle > Settings-User`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](github.com/juju/juju) codebase:
+You set your own variables in `Preferences > Package Settings > GoOracle > Settings-User`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](github.com/juju/juju) codebase:
 
 ```javascript
 {
@@ -64,9 +64,9 @@ Default key binding:
 ]
 ```
 
-You can set your own keybinding by copying the above into `Preferences > Keybindings - User` and replacing ctrl+shift+o with your preferred key(s).
+You can set your own key binding by copying the above into `Preferences > Keybindings - User` and replacing ctrl+shift+o with your preferred key(s).
 
-Dependancies
+Dependencies
 ------------
 GoOracle relies on the oracle tool. You must install it in order for GoOracle to work. Run the following on your command line:
 `go get code.google.com/p/go.tools/cmd/oracle`
