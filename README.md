@@ -27,7 +27,7 @@ Install
 
 Install Sublime Package Control (if you haven't done so already) from http://wbond.net/sublime_packages/package_control. Be sure to restart ST to complete the installation.
 
-Bring up the command palette (default ctrl+shift+p or cmd+shift+p) and start typing Package Control: Install Package then press return or click on that option to activate it. You will be presented with a new Quick Panel with the list of available packages. Type GoToggleDeclare and press return or on its entry to install GoToggleDeclare. If there is no entry for GoOracle, you most likely already have it installed.
+Bring up the command palette (default ctrl+shift+p or cmd+shift+p) and start typing Package Control: Install Package then press return or click on that option to activate it. You will be presented with a new Quick Panel with the list of available packages. Type GoOracle and press return or on its entry to install GoOracle. If there is no entry for GoOracle, you most likely already have it installed.
 
 Oracle requires several variables to be set in order to work. These are explained in the comments of the default settings `Preferences > Package Settings > GoOracle > Settings-Default`:
 
@@ -84,4 +84,4 @@ Copyright, License & Contributors
 
 GoOracle is released under the MIT license. See [LICENSE.md](LICENSE.md)
 
-GoOracle is the copyrighted work of *The GoOracle Authors* i.e me ([https://github.com/waigani/GoOracle](oracle)) and *all* contributors. If you submit a change, be it documentation or code, so long as it's committed to GoSublime's history I consider you a contributor. See [AUTHORS.md](AUTHORS.md) for a list of all the GoSublime authors/contributors.
+GoOracle is the copyrighted work of *The GoOracle Authors* i.e me ([https://github.com/waigani/GoOracle](oracle)) and *all* contributors. If you submit a change, be it documentation or code, so long as it's committed to GoOracle's history I consider you a contributor. See [AUTHORS.md](AUTHORS.md) for a list of all the GoOracle authors/contributors.
