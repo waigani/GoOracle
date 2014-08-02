@@ -1,0 +1,91 @@
+[
+	{
+		"caption": "Preferences",
+		"id": "preferences",
+		"children":
+		[
+			{
+				"caption": "Package Settings",
+				"id": "package-settings",
+				"children":
+				[
+					{
+						"caption": "GoOracle",
+						"children":
+						[
+							{
+								"caption": "Settings – Default",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/Default.sublime-settings"
+								}
+							},
+							{
+								"caption": "Settings – User",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/User.sublime-settings"
+								}
+							},
+							{ "caption": "-" },
+							{
+								"caption": "Key Bindings – Default",
+								"platform": "Linux",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/Default (Linux).sublime-keymap"
+								}
+							},
+							{
+								"caption": "Key Bindings – Default",
+								"platform": "Windows",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/Default (Windows).sublime-keymap"
+								}
+							},
+							{
+								"caption": "Key Bindings – Default",
+								"platform": "OSX",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/Default (OSX).sublime-keymap"
+								}
+							},
+							{ "caption": "-" },
+							{
+								"caption": "Changes & Announcements",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/CHANGELOG.md"
+								}
+							},
+							{ "caption": "-" },
+							{
+								"caption": "Read Me",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/README.md"
+								}
+							},
+							{
+								"caption": "Authors & Contributors",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/AUTHORS.md"
+								}
+							},
+							{
+								"caption": "License (MIT)",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/GoOracle/LICENSE.md"
+								}
+							},
+						]
+					}
+				]
+			}
+		]
+	}
+]

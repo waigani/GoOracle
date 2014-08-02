@@ -1,0 +1,12 @@
+{
+	// env is a map of GOPATH, GOROOT and PATH variables.
+	// e.g "env": { "PATH": "$HOME/go/bin:$PATH" }
+	"env": {},
+
+	// oracle_scope is an array of scopes of analysis for oracle.
+	// e.g (for github.com/juju/juju) "oracle_scope": ["github.com/juju/juju/cmd/juju", "github.com/juju/juju/cmd/jujud"]
+	"oracle_scope": [],
+
+	// The format of oracle's output can be one of: 'json', 'xml' or 'plain'
+	"oracle_format": "json",
+}
