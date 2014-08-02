@@ -3,6 +3,7 @@ GoOracle
 
 GoOracle is a Golang plugin for [SublimeText](http://www.sublimetext.com/) that integrates the Go [oracle](https://godoc.org/code.google.com/p/go.tools/oracle) tool.
 
+
 Usage
 -----
 
@@ -20,7 +21,8 @@ peers       show send/receive corresponding to selected channel op
 referrers   show all refs to entity denoted by selected identifier
 ```
 
-Press `return`/`enter` and the output will be displayed in a new tab. Note that some queries may be slow and others may simply not work due to the underlying limitations of the oracle tool.
+Press `return`/`enter` and the output will be displayed in a new tab.
+
 
 Install
 -------
@@ -66,11 +68,13 @@ Default key binding:
 
 You can set your own key binding by copying the above into `Preferences > Keybindings - User` and replacing ctrl+shift+o with your preferred key(s).
 
+
 Dependencies
 ------------
 GoOracle relies on the oracle tool. You must install it in order for GoOracle to work. Run the following on your command line:
 
 `go get code.google.com/p/go.tools/cmd/oracle`
+
 
 About Go Oracle
 ---------------
