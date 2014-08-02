@@ -69,6 +69,7 @@ You can set your own key binding by copying the above into `Preferences > Keybin
 Dependencies
 ------------
 GoOracle relies on the oracle tool. You must install it in order for GoOracle to work. Run the following on your command line:
+
 `go get code.google.com/p/go.tools/cmd/oracle`
 
 About Go Oracle
@@ -84,4 +85,4 @@ Copyright, License & Contributors
 
 GoOracle is released under the MIT license. See [LICENSE.md](LICENSE.md)
 
-GoOracle is the copyrighted work of *The GoOracle Authors* i.e me ([https://github.com/waigani/GoOracle](oracle)) and *all* contributors. If you submit a change, be it documentation or code, so long as it's committed to GoOracle's history I consider you a contributor. See [AUTHORS.md](AUTHORS.md) for a list of all the GoOracle authors/contributors.
+GoOracle is the copyrighted work of *The GoOracle Authors* i.e me ([waigani](https://github.com/waigani/GoOracle)) and *all* contributors. If you submit a change, be it documentation or code, so long as it's committed to GoOracle's history I consider you a contributor. See [AUTHORS.md](AUTHORS.md) for a list of all the GoOracle authors/contributors.
