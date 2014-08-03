@@ -125,8 +125,8 @@ def get_setting(key, default=None):
     """
 
     val = sublime.load_settings("User.sublime-settings").get(key)
-    if val is None:
+    if not val:
         val = sublime.load_settings("Default.sublime-settings").get(key)
-    if val is  None:
+    if not val:
         val = default
     return val
