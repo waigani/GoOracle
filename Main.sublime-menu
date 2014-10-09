@@ -81,7 +81,7 @@
 								"args": {
 									"file": "${packages}/GoOracle/LICENSE.md"
 								}
-							},
+							}
 						]
 					}
 				]
