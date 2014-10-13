@@ -38,7 +38,7 @@ class GoOracleCommand(sublime_plugin.TextCommand):
 
                 self.oracle(byte_end, begin_offset=byte_begin, mode=modes[i], callback=self.oracle_complete)
 
-        self.view.window().show_quick_panel(descriptions, on_done)
+        self.view.window().show_quick_panel(descriptions, on_done, sublime.MONOSPACE_FONT)
 
     def oracle_complete(self, out, err, mode):
         self.write_out(out, err, mode)
