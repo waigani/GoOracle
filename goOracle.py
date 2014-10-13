@@ -36,9 +36,12 @@ class GoOracleCommand(sublime_plugin.TextCommand):
                 if not region.empty(): 
                     byte_begin = cb_map[region.begin()-1]
 
-                out, err = self.oracle(byte_end, begin_offset=byte_begin, mode=modes[i])
-                self.write_out(out, err, modes[i])
+                self.oracle(byte_end, begin_offset=byte_begin, mode=modes[i], callback=self.oracle_complete)
+
         self.view.window().show_quick_panel(descriptions, on_done)
+
+    def oracle_complete(self, out, err, mode):
+        self.write_out(out, err, mode)
 
     def write_out(self, result, err, mode):
         """ Write the oracle output to a new file.
@@ -77,7 +80,7 @@ class GoOracleCommand(sublime_plugin.TextCommand):
             byte_offset += len(char.encode('utf-8'))
         return cb_map
 
-    def oracle(self, end_offset, begin_offset=None, mode="plain"):
+    def oracle(self, end_offset, begin_offset=None, mode="describe", callback=None):
         """ Builds the oracle shell command and calls it, returning it's output as a string.
         """
 
@@ -97,10 +100,12 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         "mode": mode,
         "scope": ' '.join(get_setting("oracle_scope"))} 
 
-        # Run thr cmd.
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
-        result, err = p.communicate()
-        return result.decode('utf-8'), err.decode('utf-8')
+        sublime.set_timeout_async(lambda: self.runInThread(cmd, callback, mode), 0)
+
+    def runInThread(self, cmd, callback, mode):
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
+        out, err = proc.communicate()
+        callback(out.decode('utf-8'), err.decode('utf-8'), mode)
 
 class GoOracleWriteToFileCommand(sublime_plugin.TextCommand):
     """ Writes the oracle output to the current view.
