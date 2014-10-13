@@ -45,6 +45,11 @@ Oracle requires several variables to be set in order to work. These are explaine
 
     // The format of oracle's output can be one of: 'json', 'xml' or 'plain'
     "oracle_format": "json",
+
+    // The output can either be one of: 'buffer', 'output_panel'
+    // Buffers can hold results from more than one invocation
+    // Output panels sit underneath the editor area and are easily dismissed
+    "output": "buffer"
 }
 ```
 
@@ -55,6 +60,7 @@ You set your own variables in `Preferences > Package Settings > GoOracle > Setti
     "env": { "GOPATH": "$HOME/go", "GOROOT": "$HOME/.gvm/gos/go1.2.1", "PATH": "$GOPATH/bin:$PATH" },
     "oracle_scope": ["github.com/juju/juju/cmd/juju", "github.com/juju/juju/cmd/jujud"],
     "oracle_format": "json",
+    "output": "buffer"
 }
 ```
 
@@ -63,6 +69,7 @@ Default key binding:
 ```javascript
 [
     { "keys": ["ctrl+shift+o"], "command": "go_oracle"},
+    { "keys": ["ctrl+alt+shift+o"], "command": "go_oracle_show_results"},
 ]
 ```
 

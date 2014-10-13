@@ -9,4 +9,9 @@
 
 	// The format of oracle's output can be one of: 'json', 'xml' or 'plain'
 	"oracle_format": "json",
+
+	// The output can either be one of: 'buffer', 'output_panel'
+	// Buffers can hold results from more than one invocation
+	// Output panels sit underneath the editor area and are easily dismissed
+	"output": "buffer"
 }

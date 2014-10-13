@@ -50,45 +50,32 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         """
 
         window = self.view.window()
-        view = self.get_output_view()
+        view = get_output_view(window)
 
         # Run a new command to use the edit object for this view.
         view.run_command('go_oracle_write_running', {'mode': mode})
-        window.focus_view(view)
+
+        if get_setting("output", "buffer") == "output_panel":
+            window.run_command('show_panel', {'panel': "output." + view.name() })
+        else:
+            window.focus_view(view)
 
     def write_out(self, result, err):
         """ Write the oracle output to a new file.
         """
 
         window = self.view.window()
-        view = self.get_output_view()
+        view = get_output_view(window)
 
         # Run a new command to use the edit object for this view.
         view.run_command('go_oracle_write_results', {
             'result': result,
             'err': err})
 
-    def get_output_view(self):
-        window = self.view.window()
-        view = None
-        buff_name = 'Oracle Output'
-
-        # If the output file is already open, use that.
-        for v in window.views():
-            if v.name() == buff_name:
-                view = v
-                break
-        # Otherwise, create a new one.
-        if view is None:
-            view = window.new_file()
-
-        view.set_name(buff_name)
-        view.set_scratch(True)
-        view_settings = view.settings()
-        view_settings.set('line_numbers', False)
-        view.set_syntax_file('Packages/GoOracle/GoOracleResults.tmLanguage')
-
-        return view
+        if get_setting("output", "buffer") == "output_panel":
+            window.run_command('show_panel', {'panel': "output." + view.name() })
+        else:
+            window.focus_view(view)
 
     def get_map(self, chars):
         """ Generate a map of character offset to byte offset for the given string 'chars'.
@@ -159,6 +146,15 @@ class GoOracleWriteRunningCommand(sublime_plugin.TextCommand):
         view.insert(edit, view.size(), content)
 
 
+class GoOracleShowResultsCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        if get_setting("output", "buffer") == "output_panel":
+            self.view.window().run_command('show_panel', {'panel': "output.Oracle Output" })
+        else:
+            output_view = get_output_view(self.view.window())
+            self.view.window().focus_view(output_view)
+
+
 class GoOracleOpenResultCommand(sublime_plugin.EventListener):
     def on_selection_modified(self, view):
       if view.name() == "Oracle Output":
@@ -188,7 +184,12 @@ class GoOracleOpenResultCommand(sublime_plugin.EventListener):
             m = re.search("^([^:]+):([0-9]+).([0-9]+)[-: ]", text)
         
         if m:
-            view.window().open_file(m.group(1) + ':' + m.group(2) + ':' + m.group(3), sublime.ENCODED_POSITION)
+            w = view.window()
+            new_view = w.open_file(m.group(1) + ':' + m.group(2) + ':' + m.group(3), sublime.ENCODED_POSITION)
+            group, index = w.get_view_index(new_view)
+            if group != -1:
+                w.focus_group(group)
+
 
 
 def get_setting(key, default=None):
@@ -202,3 +203,27 @@ def get_setting(key, default=None):
     if not val:
         val = default
     return val
+
+def get_output_view(window):
+    view = None
+    buff_name = 'Oracle Output'
+
+    if get_setting("output", "buffer") == "output_panel":
+        view = window.create_output_panel(buff_name)
+    else:
+        # If the output file is already open, use that.
+        for v in window.views():
+            if v.name() == buff_name:
+                view = v
+                break
+        # Otherwise, create a new one.
+        if view is None:
+            view = window.new_file()
+
+    view.set_name(buff_name)
+    view.set_scratch(True)
+    view_settings = view.settings()
+    view_settings.set('line_numbers', False)
+    view.set_syntax_file('Packages/GoOracle/GoOracleResults.tmLanguage')
+
+    return view
