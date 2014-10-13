@@ -7,7 +7,7 @@ It depends on the oracle tool being installed:
 go get code.google.com/p/go.tools/cmd/oracle
 """
 
-import sublime, sublime_plugin, subprocess, time
+import sublime, sublime_plugin, subprocess, time, re
 
 class GoOracleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -86,6 +86,7 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         view.set_scratch(True)
         view_settings = view.settings()
         view_settings.set('line_numbers', False)
+        view.set_syntax_file('Packages/GoOracle/GoOracleResults.tmLanguage')
 
         return view
 
@@ -135,13 +136,15 @@ class GoOracleWriteResultsCommand(sublime_plugin.TextCommand):
     def run(self, edit, result, err):
         view = self.view
 
-        content = ""
-        if result:
-            content += "\n" + result + "\n\n\n"
-        if err:
-            content += "\nErrors Found:\n\n" + err + "\n\n\n"
+        view.insert(edit, view.size(), "\n")
 
-        view.insert(edit, view.size(), content)
+        if result:
+            view.insert(edit, view.size(), result)
+        if err:
+            view.insert(edit, view.size(), err)
+
+        view.insert(edit, view.size(), "\n\n\n")
+        
 
 class GoOracleWriteRunningCommand(sublime_plugin.TextCommand):
     """ Writes the oracle output to the current view.
@@ -154,6 +157,38 @@ class GoOracleWriteRunningCommand(sublime_plugin.TextCommand):
         view.set_viewport_position(view.text_to_layout(view.size() - 1))
 
         view.insert(edit, view.size(), content)
+
+
+class GoOracleOpenResultCommand(sublime_plugin.EventListener):
+    def on_selection_modified(self, view):
+      if view.name() == "Oracle Output":
+        if len(view.sel()) != 1:
+            return
+        if view.sel()[0].size() == 0:
+            return
+
+        lines = view.lines(view.sel()[0])
+        if len(lines) != 1:
+            return
+
+        line = view.full_line(lines[0])
+        text = view.substr(line)
+
+        format = get_setting("oracle_format")
+
+        # "filename:line:col" pattern for json
+        m = re.search("\"([^\"]+):([0-9]+):([0-9]+)\"", text)
+
+        # >filename:line:col< pattern for xml
+        if m == None:
+            m = re.search(">([^<]+):([0-9]+):([0-9]+)<", text)
+
+        # filename:line.col-line.col: pattern for plain
+        if m == None:
+            m = re.search("^([^:]+):([0-9]+).([0-9]+)[-: ]", text)
+        
+        if m:
+            view.window().open_file(m.group(1) + ':' + m.group(2) + ':' + m.group(3), sublime.ENCODED_POSITION)
 
 
 def get_setting(key, default=None):
