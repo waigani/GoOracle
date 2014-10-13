@@ -36,17 +36,39 @@ class GoOracleCommand(sublime_plugin.TextCommand):
                 if not region.empty(): 
                     byte_begin = cb_map[region.begin()-1]
 
+                self.write_running(modes[i])
+
                 self.oracle(byte_end, begin_offset=byte_begin, mode=modes[i], callback=self.oracle_complete)
 
         self.view.window().show_quick_panel(descriptions, on_done, sublime.MONOSPACE_FONT)
 
-    def oracle_complete(self, out, err, mode):
-        self.write_out(out, err, mode)
+    def oracle_complete(self, out, err):
+        self.write_out(out, err)
 
-    def write_out(self, result, err, mode):
+    def write_running(self, mode):
+        """ Write the "Running..." header to a new file and focus it to get results
+        """
+
+        window = self.view.window()
+        view = self.get_output_view()
+
+        # Run a new command to use the edit object for this view.
+        view.run_command('go_oracle_write_running', {'mode': mode})
+        window.focus_view(view)
+
+    def write_out(self, result, err):
         """ Write the oracle output to a new file.
         """
 
+        window = self.view.window()
+        view = self.get_output_view()
+
+        # Run a new command to use the edit object for this view.
+        view.run_command('go_oracle_write_results', {
+            'result': result,
+            'err': err})
+
+    def get_output_view(self):
         window = self.view.window()
         view = None
         buff_name = 'Oracle Output'
@@ -59,15 +81,13 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         # Otherwise, create a new one.
         if view is None:
             view = window.new_file()
-            view.set_name(buff_name)
-            view.set_scratch(True)
 
-        # Run a new command to use the edit object for this view.
-        view.run_command('go_oracle_write_to_file', {
-            'result': result,
-            'err': err,
-            'mode': mode})
-        window.focus_view(view)
+        view.set_name(buff_name)
+        view.set_scratch(True)
+        view_settings = view.settings()
+        view_settings.set('line_numbers', False)
+
+        return view
 
     def get_map(self, chars):
         """ Generate a map of character offset to byte offset for the given string 'chars'.
@@ -101,28 +121,39 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         "mode": mode,
         "scope": ' '.join(get_setting("oracle_scope"))} 
 
-        sublime.set_timeout_async(lambda: self.runInThread(cmd, callback, mode), 0)
+        sublime.set_timeout_async(lambda: self.runInThread(cmd, callback), 0)
 
-    def runInThread(self, cmd, callback, mode):
+    def runInThread(self, cmd, callback):
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
         out, err = proc.communicate()
-        callback(out.decode('utf-8'), err.decode('utf-8'), mode)
+        callback(out.decode('utf-8'), err.decode('utf-8'))
 
-class GoOracleWriteToFileCommand(sublime_plugin.TextCommand):
+class GoOracleWriteResultsCommand(sublime_plugin.TextCommand):
     """ Writes the oracle output to the current view.
     """
 
-    def run(self, edit, result, err, mode):
+    def run(self, edit, result, err):
         view = self.view
 
-        content = mode
+        content = ""
         if result:
-            content += "\n\n" + result
+            content += "\n" + result + "\n\n\n"
         if err:
-            content += "\nErrors Found:\n\n"+ err
+            content += "\nErrors Found:\n\n" + err + "\n\n\n"
 
-        view.replace(edit, sublime.Region(0, view.size()), content)
-        view.sel().clear()
+        view.insert(edit, view.size(), content)
+
+class GoOracleWriteRunningCommand(sublime_plugin.TextCommand):
+    """ Writes the oracle output to the current view.
+    """
+
+    def run(self, edit, mode):
+        view = self.view
+
+        content = "Running oracle " + mode + " command...\n"
+        view.set_viewport_position(view.text_to_layout(view.size() - 1))
+
+        view.insert(edit, view.size(), content)
 
 
 def get_setting(key, default=None):
