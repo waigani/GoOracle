@@ -60,6 +60,7 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         if view is None:
             view = window.new_file()
             view.set_name(buff_name)
+            view.set_scratch(True)
 
         # Run a new command to use the edit object for this view.
         view.run_command('go_oracle_write_to_file', {
