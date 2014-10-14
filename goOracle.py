@@ -10,7 +10,20 @@ go get code.google.com/p/go.tools/cmd/oracle
 import sublime, sublime_plugin, subprocess, time, re
 
 class GoOracleCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
+    def run(self, edit, mode=None):
+
+        region = self.view.sel()[0]
+        text = self.view.substr(sublime.Region(0, region.end()))
+        cb_map = self.get_map(text)
+        byte_end = cb_map[sorted(cb_map.keys())[-1]]
+        byte_begin = None
+        if not region.empty(): 
+            byte_begin = cb_map[region.begin()-1]
+
+        if mode:
+            self.write_running(mode)
+            self.oracle(byte_end, begin_offset=byte_begin, mode=mode, callback=self.oracle_complete)
+            return
 
         # Get the oracle mode from the user.
         modes = ["callees","callers","callgraph","callstack","describe","freevars","implements","peers","referrers"]
@@ -28,14 +41,6 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         # Call oracle cmd with the given mode.
         def on_done(i):
             if i >= 0 :
-                region = self.view.sel()[0]
-                text = self.view.substr(sublime.Region(0, region.end()))
-                cb_map = self.get_map(text)
-                byte_end = cb_map[sorted(cb_map.keys())[-1]]
-                byte_begin = None
-                if not region.empty(): 
-                    byte_begin = cb_map[region.begin()-1]
-
                 self.write_running(modes[i])
 
                 self.oracle(byte_end, begin_offset=byte_begin, mode=modes[i], callback=self.oracle_complete)

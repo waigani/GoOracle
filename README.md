@@ -75,6 +75,16 @@ Default key binding:
 
 You can set your own key binding by copying the above into `Preferences > Keybindings - User` and replacing ctrl+shift+o with your preferred key(s).
 
+You can also set a key binding for a specific mode by adding a "mode" arg, e.g.:
+
+```javascript
+    ...
+    { "keys": ["ctrl+super+c"], "command": "go_oracle", "args": {"mode": "callers"} },
+    { "keys": ["ctrl+super+i"], "command": "go_oracle", "args": {"mode": "implements"} },
+    { "keys": ["ctrl+super+r"], "command": "go_oracle", "args": {"mode": "referrers"} },
+    ...
+```
+
 
 Dependencies
 ------------
