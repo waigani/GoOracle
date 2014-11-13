@@ -1,4 +1,4 @@
 [
            { "keys": ["ctrl+shift+o"], "command": "go_oracle"},
-           { "keys": ["ctrl+alt+shift+o"], "command": "go_oracle_show_results"},
+           { "keys": ["ctrl+alt+shift+o"], "command": "go_oracle_show_results"}
 ]
