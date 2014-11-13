@@ -87,15 +87,20 @@ class GoOracleCommand(sublime_plugin.TextCommand):
         env = get_setting("env")
 
         # Build oracle cmd.
-        cmd = "export GOPATH=\"%(go_path)s\"; export GOROOT=\"%(go_root)s\"; export PATH=%(path)s; oracle -pos=%(file_path)s:%(pos)s -format=%(output_format)s %(mode)s %(scope)s"  % {
+        cmd = "export GOPATH=\"%(go_path)s\"; export PATH=%(path)s; oracle -pos=%(file_path)s:%(pos)s -format=%(output_format)s %(mode)s %(scope)s"  % {
         "go_path": env["GOPATH"],
-        "go_root": env["GOROOT"],
         "path": env["PATH"],
         "file_path": self.view.file_name(),
         "pos": pos,
         "output_format": get_setting("oracle_format"),
         "mode": mode,
         "scope": ' '.join(get_setting("oracle_scope"))} 
+
+        if "GOROOT" in env:
+            gRoot = "export GOROOT=\"%s\"; " % env["GOROOT"] 
+            cmd = gRoot + cmd
+
+        # TODO if scpoe is not set, use pwd, 1st main.go under pwd, sublime project path
 
         # Run thr cmd.
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)

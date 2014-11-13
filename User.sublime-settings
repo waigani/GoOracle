@@ -1,6 +1,6 @@
 {
 	// Example settings. Replace these with your own.
-	// "env": { "GOPATH": "$HOME/go", "GOROOT": "$HOME/.gvm/gos/go1.2.1", "PATH": "$GOPATH/bin:$PATH" },
-	// "oracle_scope": ["github.com/juju/juju/cmd/juju", "github.com/juju/juju/cmd/jujud"],
-	// "oracle_format": "json",
+	// "env": {},
+	"oracle_scope": ["github.com/juju/juju/cmd/juju", "github.com/juju/juju/cmd/jujud"],
+	// "oracle_format": "",
 }
