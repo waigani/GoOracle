@@ -201,13 +201,19 @@ class GoOracleOpenResultCommand(sublime_plugin.EventListener):
                 w.focus_group(group)
 
 
-
 def get_setting(key, default=None):
-    """ Returns the user setting if found, otherwise it returns the
-    default setting. If neither are set the 'default' value passed in is returned.
+    """ Returns the setting in the following hierarchy: project setting, user setting, 
+    default setting.  If none are set the 'default' value passed in is returned.
     """
 
-    val = sublime.load_settings("User.sublime-settings").get(key)
+    val = None
+    try:
+       val = sublime.active_window().active_view().settings().get('GoOracle', {}).get(key)
+    except AttributeError:
+        pass
+
+    if not val:
+        val = sublime.load_settings("User.sublime-settings").get(key)
     if not val:
         val = sublime.load_settings("Default.sublime-settings").get(key)
     if not val:
