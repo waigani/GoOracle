@@ -19,3 +19,6 @@ GoOracle Changes
 	* Add double-click jump-to support
 		- fires on selection change of a line containing a reference
 		- matches xml, json, and plain output formats
+
+### 0.1.4
+	* Support project settings

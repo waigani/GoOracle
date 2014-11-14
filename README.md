@@ -64,6 +64,27 @@ You set your own variables in `Preferences > Package Settings > GoOracle > Setti
 }
 ```
 
+You can also make project specific settings. First save your current workspace as a project `Project > Sava as project ...`, then edit your project `Project > Edit Project`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](github.com/juju/juju) codebase:
+
+```javascript
+{
+    "folders":
+    [
+        {
+            "follow_symlinks": true,
+            "path": "/home/user/go/src/github.com/juju/juju"
+        }
+    ],
+    "settings":
+    {
+        "GoOracle": {
+            "oracle_scope": ["github.com/juju/juju/cmd/juju", "github.com/juju/juju/cmd/jujud"],
+            "output": "output_panel"
+        }
+    },
+}
+```javascript
+
 Default key binding:
 
 ```javascript
