@@ -64,7 +64,7 @@ You set your own variables in `Preferences > Package Settings > GoOracle > Setti
 }
 ```
 
-You can also make project specific settings. First save your current workspace as a project `Project > Sava as project ...`, then edit your project `Project > Edit Project`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](github.com/juju/juju) codebase:
+You can also make project specific settings. First save your current workspace as a project `Project > Save as project ...`, then edit your project `Project > Edit Project`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](github.com/juju/juju) codebase:
 
 ```javascript
 {
@@ -83,7 +83,7 @@ You can also make project specific settings. First save your current workspace a
         }
     },
 }
-```javascript
+```
 
 Default key binding:
 
