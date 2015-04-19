@@ -111,7 +111,7 @@ Dependencies
 ------------
 GoOracle relies on the oracle tool. You must install it in order for GoOracle to work. Run the following on your command line:
 
-`go get code.google.com/p/go.tools/cmd/oracle`
+`go get golang.org/x/tools/cmd/oracle`
 
 
 About Go Oracle
