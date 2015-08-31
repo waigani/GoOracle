@@ -53,7 +53,7 @@ Oracle requires several variables to be set in order to work. These are explaine
 }
 ```
 
-You set your own variables in `Preferences > Package Settings > GoOracle > Settings-User`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](github.com/juju/juju) codebase:
+You set your own variables in `Preferences > Package Settings > GoOracle > Settings-User`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](https://github.com/juju/juju) codebase:
 
 ```javascript
 {
@@ -64,7 +64,7 @@ You set your own variables in `Preferences > Package Settings > GoOracle > Setti
 }
 ```
 
-You can also make project specific settings. First save your current workspace as a project `Project > Save as project ...`, then edit your project `Project > Edit Project`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](github.com/juju/juju) codebase:
+You can also make project specific settings. First save your current workspace as a project `Project > Save as project ...`, then edit your project `Project > Edit Project`. Below is an example which sets up GoOracle to be used on the [github.com/juju/juju](https://github.com/juju/juju) codebase:
 
 ```javascript
 {
