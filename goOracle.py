@@ -4,7 +4,7 @@
 """
 GoOracle is a Go oracle plugin for Sublime Text 3.
 It depends on the oracle tool being installed:
-go get code.google.com/p/go.tools/cmd/oracle
+go get golang.org/x/tools/cmd/oracle
 """
 
 import sublime, sublime_plugin, subprocess, time, re

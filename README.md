@@ -1,7 +1,7 @@
 GoOracle
 =========
 
-GoOracle is a Golang plugin for [SublimeText](http://www.sublimetext.com/) that integrates the Go [oracle](https://godoc.org/code.google.com/p/go.tools/oracle) tool.
+GoOracle is a Golang plugin for [SublimeText](http://www.sublimetext.com/) that integrates the Go [oracle](https://godoc.org/golang.org/x/tools/cmd/oracle) tool.
 
 
 Usage
@@ -111,7 +111,7 @@ Dependencies
 ------------
 GoOracle relies on the oracle tool. You must install it in order for GoOracle to work. Run the following on your command line:
 
-`go get code.google.com/p/go.tools/cmd/oracle`
+`go get golang.org/x/tools/cmd/oracle`
 
 
 About Go Oracle
@@ -119,7 +119,7 @@ About Go Oracle
 
 - [User Manual](https://docs.google.com/document/d/1SLk36YRjjMgKqe490mSRzOPYEDe0Y_WQNRv-EiFYUyw/view#)
 - [Design Document](https://docs.google.com/a/canonical.com/document/d/1WmMHBUjQiuy15JfEnT8YBROQmEv-7K6bV-Y_K53oi5Y/edit#heading=h.m6dk5m56ri4e)
-- [GoDoc](https://godoc.org/code.google.com/p/go.tools/oracle)
+- [GoDoc](https://godoc.org/golang.org/x/tools/cmd/oracle)
 
 
 Copyright, License & Contributors
