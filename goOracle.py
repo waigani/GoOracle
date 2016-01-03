@@ -103,11 +103,25 @@ class GoOracleCommand(sublime_plugin.TextCommand):
             pos = "#%i,#%i" %(begin_offset, end_offset)
         env = get_setting("env")
 
+        #Set GOOS based on os at the end of the file name.
+        #TODO Check file header for builds.
+        file_path = self.view.file_name()
+        goos = ""
+        #From https://golang.org/doc/install/source
+        goos_options = ["darwin", "dragonfly", "freebsd", "linux", "netbsd", "openbsd", "plan9", "solaris", "windows"]
+        sp = file_path.rsplit("_", 1)
+        if len(sp) == 2:
+            if sp[1].endswith('.go'):
+                last = sp[1][:-3]
+                if last in goos_options:
+                    goos = last
+
         # Build oracle cmd.
-        cmd = "export GOPATH=\"%(go_path)s\"; export PATH=%(path)s; oracle -pos=%(file_path)s:%(pos)s -format=%(output_format)s %(mode)s %(scope)s"  % {
+        cmd = "export GOPATH=\"%(go_path)s\"; export PATH=%(path)s; GOOS=%(goos)s oracle -pos=%(file_path)s:%(pos)s -format=%(output_format)s %(mode)s %(scope)s" % {
         "go_path": env["GOPATH"],
         "path": env["PATH"],
-        "file_path": self.view.file_name(),
+        "goos": goos,
+        "file_path": file_path,
         "pos": pos,
         "output_format": get_setting("oracle_format"),
         "mode": mode,
